@@ -4,7 +4,6 @@ import 'package:to_do/home/task_list/add_task_bottom_sheet.dart';
 import 'package:to_do/home/task_list/task_list_tab.dart';
 import 'package:to_do/theme.dart';
 
-
 class HomeView extends StatefulWidget {
   static const String routeName = 'HomeView';
 
@@ -51,7 +50,12 @@ class _HomeViewState extends State<HomeView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showAddTaskBottomSheet();
+          showModalBottomSheet(
+            isScrollControlled: true,
+              context: context,
+              builder: (context) {
+                return const AddTaskBottomSheet();
+              });
         },
         child: Icon(
           Icons.add,
@@ -65,15 +69,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   List<Widget> widgets = [
-   const TaskListTab(),
-   const SettingsTab(),
+    const TaskListTab(),
+    const SettingsTab(),
   ];
-
-  void showAddTaskBottomSheet() {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return const AddTaskBottomSheet();
-        });
-  }
 }
