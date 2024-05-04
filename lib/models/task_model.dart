@@ -1,9 +1,9 @@
 class Task {
-  String id;
-  final String title;
-  final String description;
-  final DateTime date;
-  final bool isDone;
+  String? id;
+   String? title;
+   String? description;
+   DateTime? date;
+   bool? isDone;
 
   Task({
     this.id = '',
@@ -29,7 +29,7 @@ class Task {
       'id': id,
       'title': title,
       'description': description,
-      'date': date.millisecondsSinceEpoch,
+      'date': date?.millisecondsSinceEpoch,
       'isDone': isDone
     };
   }

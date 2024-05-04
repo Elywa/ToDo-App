@@ -1,12 +1,10 @@
-
 import 'package:flutter/material.dart';
+import 'package:to_do/models/task_model.dart';
 import 'package:to_do/theme.dart';
 
-
-
 class TaskListItem extends StatelessWidget {
-  const TaskListItem({super.key});
-
+  const TaskListItem({super.key, required this.task});
+  final Task task;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +37,7 @@ class TaskListItem extends StatelessWidget {
               children: [
                 ListTile(
                   title: Text(
-                    'Task Title',
+                    task.title ?? 'Unknown',
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge
@@ -47,7 +45,7 @@ class TaskListItem extends StatelessWidget {
                   ),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top: 16),
-                    child: Text('Task decription',
+                    child: Text(task.description ?? 'Unknown',
                         style: Theme.of(context).textTheme.titleMedium),
                   ),
                   trailing: Container(

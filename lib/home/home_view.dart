@@ -51,7 +51,7 @@ class _HomeViewState extends State<HomeView> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
-            isScrollControlled: true,
+              isScrollControlled: true,
               context: context,
               builder: (context) {
                 return const AddTaskBottomSheet();
@@ -69,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   List<Widget> widgets = [
-    const TaskListTab(),
+    TaskListTab(),
     const SettingsTab(),
   ];
 }
