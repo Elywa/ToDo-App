@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do/firebase_options.dart';
 import 'package:to_do/home/home_view.dart';
+import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/theme.dart';
 
 void main() async {
@@ -18,7 +20,8 @@ void main() async {
   await FirebaseFirestore.instance.disableNetwork();
   FirebaseFirestore.instance.settings =
       Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => ListProvider(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

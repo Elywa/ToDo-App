@@ -9,7 +9,7 @@ class TaskListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * .15,
+      height: MediaQuery.of(context).size.height * .17,
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.only(
         top: 15,
@@ -45,8 +45,11 @@ class TaskListItem extends StatelessWidget {
                   ),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top: 16),
-                    child: Text(task.description ?? 'Unknown',
-                        style: Theme.of(context).textTheme.titleMedium),
+                    child: Text(
+                      task.description ?? 'Unknown',
+                      style: Theme.of(context).textTheme.titleMedium,
+                      maxLines: 2,
+                    ),
                   ),
                   trailing: Container(
                     width: 60,

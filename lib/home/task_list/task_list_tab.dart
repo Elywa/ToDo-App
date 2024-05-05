@@ -1,9 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:to_do/firebase%20utils/firebase_utils.dart';
+import 'package:provider/provider.dart';
+
 import 'package:to_do/home/task_list/task_list_item.dart';
-import 'package:to_do/models/task_model.dart';
+
+import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/theme.dart';
 
 class TaskListTab extends StatefulWidget {
@@ -14,13 +15,12 @@ class TaskListTab extends StatefulWidget {
 }
 
 class _TaskListTabState extends State<TaskListTab> {
-  List<Task> tasks = [];
-
   @override
   Widget build(BuildContext context) {
-    if (tasks.isEmpty) {
-      getAllTasks();
-    }
+    var listProvider = Provider.of<ListProvider>(context);
+
+    listProvider.getAllTasks();
+
     return Container(
       color: MyTheme.backgroundColor,
       child: Column(
@@ -57,23 +57,14 @@ class _TaskListTabState extends State<TaskListTab> {
           ),
           Expanded(
               child: ListView.builder(
-                  itemCount: tasks.length,
+                  itemCount: listProvider.tasks.length,
                   itemBuilder: (context, index) {
                     return TaskListItem(
-                      task: tasks[index],
+                      task: listProvider.tasks[index],
                     );
                   })),
         ],
       ),
     );
-  }
-
-  void getAllTasks() async {
-    var taskCollectionRef = FireBaseUtils.getCollectionRef();
-    QuerySnapshot<Task> querySnapshots = await taskCollectionRef.get();
-    tasks = querySnapshots.docs.map((docs) {
-      return docs.data();
-    }).toList();
-    setState(() {});
   }
 }
