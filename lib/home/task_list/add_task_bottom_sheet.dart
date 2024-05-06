@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
 import 'package:to_do/functions.dart';
 import 'package:to_do/home/task_list/custom_text_form_field.dart';
 import 'package:to_do/models/task_model.dart';
+import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/theme.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
@@ -16,11 +18,13 @@ class AddTaskBottomSheet extends StatefulWidget {
 class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   late String title, description;
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  late ListProvider listProvider;
 
   var selectedDate = DateTime.now();
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    listProvider = Provider.of<ListProvider>(context);
     return Container(
       margin: const EdgeInsets.all(20),
       padding: EdgeInsets.only(
@@ -126,6 +130,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         showSnackBar(
             context, '                          Task Added Successfully ');
       });
+      listProvider.getAllTasks();
     } else {
       //هنا عشان يفضل يظهر لليوزر مسدج بالايرور
       autovalidateMode = AutovalidateMode.always;

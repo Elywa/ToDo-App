@@ -19,52 +19,55 @@ class _TaskListTabState extends State<TaskListTab> {
   Widget build(BuildContext context) {
     var listProvider = Provider.of<ListProvider>(context);
 
-    listProvider.getAllTasks();
+    if (listProvider.tasks.isEmpty) {
+      listProvider.getAllTasks();
+      
+    }
 
-    return Container(
-      color: MyTheme.backgroundColor,
-      child: Column(
-        children: [
-          EasyDateTimeLine(
-            locale: 'en',
-            initialDate: DateTime.now(),
-            onDateChange: (selectedDate) {
-              //`selectedDate` the new date selected.
-            },
-            headerProps: const EasyHeaderProps(
-              monthPickerType: MonthPickerType.switcher,
-              dateFormatter: DateFormatter.fullDateDMY(),
-            ),
-            dayProps: const EasyDayProps(
-              dayStructure: DayStructure.dayStrDayNum,
-              activeDayStyle: DayStyle(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xff3371FF),
-                      Color(0xff8426D6),
-                    ],
-                  ),
+    return Column(
+      children: [
+        EasyDateTimeLine(
+          locale: 'en',
+          initialDate: listProvider.selectedDate,
+          onDateChange: (selectedDate) {
+            listProvider.cahngeSelectedDate(selectedDate);
+            print(listProvider.selectedDate);
+          },
+          headerProps: const EasyHeaderProps(
+            monthPickerType: MonthPickerType.switcher,
+            dateFormatter: DateFormatter.fullDateDMY(),
+          ),
+          dayProps: const EasyDayProps(
+            dayStructure: DayStructure.dayStrDayNum,
+            activeDayStyle: DayStyle(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xff3371FF),
+                    Color(0xff8426D6),
+                  ],
                 ),
               ),
             ),
           ),
-          const SizedBox(
-            height: 25,
+        ),
+        const SizedBox(
+          height: 25,
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: listProvider.tasks.length,
+            itemBuilder: (context, index) {
+              return TaskListItem(
+                task: listProvider.tasks[index],
+              );
+            },
           ),
-          Expanded(
-              child: ListView.builder(
-                  itemCount: listProvider.tasks.length,
-                  itemBuilder: (context, index) {
-                    return TaskListItem(
-                      task: listProvider.tasks[index],
-                    );
-                  })),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

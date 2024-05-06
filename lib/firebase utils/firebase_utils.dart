@@ -19,5 +19,14 @@ class FireBaseUtils {
         );
   }
 
-  
+  static Future<void> deleteTask(Task task) {
+    var ref = getCollectionRef();
+    return ref.doc(task.id).delete();
+  }
+
+  static Future<void> updateTaskeIsDone(Task task) {
+    var ref = getCollectionRef();
+
+    return ref.doc(task.id).update({'isDone': !task.isDone!});
+  }
 }
