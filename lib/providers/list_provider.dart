@@ -37,7 +37,15 @@ class ListProvider extends ChangeNotifier {
     //كان ممكن نستغني عن الكلام ده كله بالquerires اللى موجودهخ فى الدوكيومنتيشن فى الفايربيز
   }
 
-  
+  Future<void> updateUser(
+      Task task, String? title, String? description, DateTime? date) {
+    var ref = FireBaseUtils.getCollectionRef();
+    return ref.doc(task.id).update({
+      'title': title ?? task.title,
+      'description': description ?? task.description,
+      'date': date?.millisecondsSinceEpoch ?? task.date!.millisecondsSinceEpoch,
+    });
+  }
 
   void cahngeSelectedDate(DateTime newDate) {
     selectedDate = newDate;

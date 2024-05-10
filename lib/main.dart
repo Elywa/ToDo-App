@@ -3,8 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do/auth/register/register_view.dart';
 import 'package:to_do/firebase_options.dart';
 import 'package:to_do/home/home_view.dart';
+import 'package:to_do/home/task_list/edit_task_view.dart';
 import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/theme.dart';
 
@@ -32,9 +34,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: MyTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: HomeView.routeName,
+      initialRoute: RegisterView.routeName,
       routes: {
         HomeView.routeName: (context) => HomeView(),
+        RegisterView.routeName: (context) => const RegisterView()
       },
     );
   }
