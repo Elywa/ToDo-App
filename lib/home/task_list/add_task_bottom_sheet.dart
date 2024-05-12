@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
 import 'package:to_do/functions.dart';
-import 'package:to_do/home/task_list/custom_text_form_field.dart';
+import 'package:to_do/home/task_list/widgets/custom_text_form_field.dart';
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/theme.dart';
@@ -54,12 +54,26 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 ],
               ),
               CustomTextFormField(
+                validator: (data) {
+          if (data == null || data.isEmpty) {
+            return 'field is required';
+          } else {
+            return null;
+          }
+        },
                 hintText: 'Enter Task title',
                 onChanged: (value) {
                   title = value;
                 },
               ),
               CustomTextFormField(
+                validator: (data) {
+          if (data == null || data.isEmpty) {
+            return 'field is required';
+          } else {
+            return null;
+          }
+        },
                 hintText: 'Enter Task decription',
                 maxLines: 4,
                 onChanged: (value) {

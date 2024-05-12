@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do/auth/login/login_view.dart';
 import 'package:to_do/auth/register/register_view.dart';
 import 'package:to_do/firebase_options.dart';
 import 'package:to_do/home/home_view.dart';
@@ -34,10 +35,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: MyTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: RegisterView.routeName,
+      initialRoute: LoginView.routeName,
       routes: {
         HomeView.routeName: (context) => HomeView(),
-        RegisterView.routeName: (context) => const RegisterView()
+        RegisterView.routeName: (context) => RegisterView(),
+        LoginView.routeName: (context) => LoginView()
       },
     );
   }

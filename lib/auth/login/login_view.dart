@@ -3,34 +3,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:to_do/auth/register/register_view.dart';
 import 'package:to_do/functions.dart';
 import 'package:to_do/home/home_view.dart';
 import 'package:to_do/home/task_list/widgets/custom_text_form_field.dart';
 import 'package:to_do/theme.dart';
 
-class RegisterView extends StatefulWidget {
-  RegisterView({super.key});
-  static const String routeName = 'RegisterView';
+class LoginView extends StatefulWidget {
+  LoginView({super.key});
+  static const String routeName = 'LoginView';
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
-  bool isLoading = false;
-
-  TextEditingController nameController = TextEditingController();
-
+class _LoginViewState extends State<LoginView> {
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
 
-  TextEditingController confirmPassowrdController = TextEditingController();
-
   var formKey = GlobalKey<FormState>();
 
   AutovalidateMode autoValidate = AutovalidateMode.disabled;
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,7 +44,7 @@ class _RegisterViewState extends State<RegisterView> {
             backgroundColor: Colors.transparent,
             centerTitle: true,
             title: Text(
-              'Create Account',
+              'Login',
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
@@ -66,23 +61,11 @@ class _RegisterViewState extends State<RegisterView> {
                       height: MediaQuery.of(context).size.height * .24,
                     ),
                     Text(
-                      'User Name',
+                      'Welcome Back!',
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
-                          .copyWith(color: MyTheme.primaryColor),
-                    ),
-                    CustomTextFormField(
-                      controller: nameController,
-                      hintText: 'please enter user name',
-                      keyboradTpe: TextInputType.name,
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'field is required';
-                        } else {
-                          return null;
-                        }
-                      },
+                          .copyWith(fontSize: 25, color: MyTheme.primaryColor),
                     ),
                     const SizedBox(
                       height: 20,
@@ -138,28 +121,20 @@ class _RegisterViewState extends State<RegisterView> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Text(
-                      'Confirm Password',
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: MyTheme.primaryColor,
-                          ),
-                    ),
-                    CustomTextFormField(
-                      controller: confirmPassowrdController,
-                      hintText: 'please Confirm Password',
-                      keyboradTpe: TextInputType.number,
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'field is required';
-                        }
-                        if (text != passwordController.text) {
-                          return 'password does not match';
-                        }
-                        return null;
-                      },
+                    TextButton(
+                      onPressed: () {},
+                      child: Center(
+                        child: Text(
+                          'Forgot Password ? ',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(color: MyTheme.primaryColor),
+                        ),
+                      ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
@@ -167,15 +142,35 @@ class _RegisterViewState extends State<RegisterView> {
                             MyTheme.primaryColor),
                       ),
                       onPressed: () {
-                        registerNewUser();
+                        loginUser();
                       },
                       child: Center(
                         child: Text(
-                          'Register',
+                          'Login',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          RegisterView.routeName,
+                        );
+                      },
+                      child: Center(
+                        child: Text(
+                          'Create new Account',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(color: MyTheme.primaryColor),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -186,29 +181,28 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  void registerNewUser() async {
+  void loginUser() async {
     if (formKey.currentState?.validate() == true) {
       try {
         print('==================== Try Function =====================');
         isLoading = true;
         final credential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
         isLoading = false;
         Navigator.pushNamed(context, HomeView.routeName);
-        print('==================== Login Success =====================');
       } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          print('==================== weak-password =====================');
-          isLoading = false;
-          showSnackBar(context, 'Weak Password');
-        } else if (e.code == 'email-already-in-use') {
-          isLoading = false;
+        if (e.code == 'invalid-credential') {
           print(
-              '==================== The account already exists for that email. =====================');
-          showSnackBar(context, 'The account already exists for that email.');
+              '====================== No user found for that email.===============');
+          isLoading = false;
+          showSnackBar(context, 'invalid user name');
+        } else if (e.code == 'invalid-credential') {
+          print(' ================== ${e.code.toString()} =================');
+          isLoading = false;
+          showSnackBar(context, 'Wrong password ');
         }
       } catch (e) {
         print('==================== ${e.toString()} =====================');
