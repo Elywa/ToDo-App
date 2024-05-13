@@ -116,7 +116,7 @@ class _EditTaskViewState extends State<EditTaskView> {
                     minimumSize: const Size(double.infinity, 40),
                   ),
                   onPressed: () {
-                    provider.updateUser(widget.task, title, desc, choosedDate);
+                    provider.updateTask(widget.task, title, desc, choosedDate);
                     provider.getAllTasks();
                     setState(() {});
                     Navigator.pop(context);

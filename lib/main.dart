@@ -20,9 +20,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // عشان اكيش الداتا اوفلاين عندى ع الجهاز بحط السطرين دول
-  await FirebaseFirestore.instance.disableNetwork();
-  FirebaseFirestore.instance.settings =
-      Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
+  // await FirebaseFirestore.instance.disableNetwork();
+  // FirebaseFirestore.instance.settings =
+  //     Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
   runApp(ChangeNotifierProvider(
       create: (context) => ListProvider(), child: MyApp()));
 }

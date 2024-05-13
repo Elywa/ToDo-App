@@ -37,7 +37,7 @@ class ListProvider extends ChangeNotifier {
     //كان ممكن نستغني عن الكلام ده كله بالquerires اللى موجودهخ فى الدوكيومنتيشن فى الفايربيز
   }
 
-  Future<void> updateUser(
+  Future<void> updateTask(
       Task task, String? title, String? description, DateTime? date) {
     var ref = FireBaseUtils.getCollectionRef();
     return ref.doc(task.id).update({

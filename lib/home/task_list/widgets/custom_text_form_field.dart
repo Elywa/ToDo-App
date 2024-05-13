@@ -7,12 +7,13 @@ class CustomTextFormField extends StatelessWidget {
       required this.hintText,
       required this.validator,
       this.maxLines = 1,
+      this.obsecureText = false , 
       this.onChanged,
       this.controller,
       this.keyboradTpe});
   final String hintText;
   final int maxLines;
-  
+  bool obsecureText ; 
   TextEditingController? controller;
   String? Function(String?)? validator;
   TextInputType? keyboradTpe;
@@ -22,6 +23,7 @@ class CustomTextFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 15),
       child: TextFormField(
+        obscureText:obsecureText ,
         controller: controller,
         onChanged: onChanged,
         validator: validator,
