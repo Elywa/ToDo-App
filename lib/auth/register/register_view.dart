@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
 import 'package:to_do/functions.dart';
 import 'package:to_do/home/home_view.dart';
 import 'package:to_do/home/task_list/widgets/custom_text_form_field.dart';
 import 'package:to_do/models/my_user.dart';
+import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
 
 class RegisterView extends StatefulWidget {
@@ -198,15 +200,17 @@ class _RegisterViewState extends State<RegisterView> {
           email: emailController.text,
           password: passwordController.text,
         );
-        await FireBaseUtils.addUserToFireStore(
-          MyUser(
-              email: emailController.text,
-              id: credential.user?.uid ?? '',
-              name: nameController.text),
-        );
+        MyUser user = MyUser(
+            email: emailController.text,
+            id: credential.user?.uid ?? '',
+            name: nameController.text);
+        // listen = flase because i want to call provider one time at this moment.
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.updateUser(newUser: user);
+        await FireBaseUtils.addUserToFireStore(user); 
         isLoading = false;
-        Navigator.pushNamed(context, HomeView.routeName);
-        print('==================== Login Success =====================');
+        Navigator.pushReplacementNamed(context, HomeView.routeName);
+        print('==================== Register Success =====================');
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('==================== weak-password =====================');

@@ -4,15 +4,15 @@ import 'package:to_do/models/my_user.dart';
 import 'package:to_do/models/task_model.dart';
 
 class FireBaseUtils {
-  static Future<void> addTask(Task task) {
-    var taskCollectionRef = getCollectionRef();
+  static Future<void> addTask(Task task , String uId) {
+    var taskCollectionRef = getTaskCollectionRef(uId);
     DocumentReference<Task> taskDocRef = taskCollectionRef.doc();
     task.id = taskDocRef.id;
     return taskDocRef.set(task);
   }
 
-  static CollectionReference<Task> getCollectionRef() {
-    return FirebaseFirestore.instance
+  static CollectionReference<Task> getTaskCollectionRef(String uId) {
+    return getUserCollectionRef().doc(uId)
         .collection(kTaskCollection)
         .withConverter<Task>(
           fromFirestore: (snapShot, options) => Task.fromJson(snapShot.data()),
@@ -20,13 +20,13 @@ class FireBaseUtils {
         );
   }
 
-  static Future<void> deleteTask(Task task) {
-    var ref = getCollectionRef();
+  static Future<void> deleteTask(Task task, String uId) {
+    var ref = getTaskCollectionRef(uId);
     return ref.doc(task.id).delete();
   }
 
-  static Future<void> updateTaskeIsDone(Task task) {
-    var ref = getCollectionRef();
+  static Future<void> updateTaskeIsDone(Task task, String uId) {
+    var ref = getTaskCollectionRef(uId);
 
     return ref.doc(task.id).update({'isDone': !task.isDone!});
   }
@@ -49,6 +49,6 @@ class FireBaseUtils {
 
   static Future<MyUser?> getUserFromFireStore(String userId) async {
     var querySnapshot = await getUserCollectionRef().doc(userId).get();
-    return querySnapshot.data() ; 
+    return querySnapshot.data();
   }
 }

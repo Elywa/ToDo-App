@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
+import 'package:to_do/functions.dart';
 import 'package:to_do/home/task_list/edit_task_view.dart';
 
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/providers/list_provider.dart';
+import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
 
 class TaskListItem extends StatefulWidget {
@@ -21,6 +23,7 @@ class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
     var listProvider = Provider.of<ListProvider>(context);
+    var user = Provider.of<UserProvider>(context);
     return Container(
       margin: const EdgeInsets.all(10),
       child: Slidable(
@@ -33,11 +36,16 @@ class _TaskListItemState extends State<TaskListItem> {
                   topLeft: Radius.circular(16),
                   bottomLeft: Radius.circular(16)),
               onPressed: (context) {
-                FireBaseUtils.deleteTask(widget.task).timeout(
+                FireBaseUtils.deleteTask(widget.task, user.currentUser!.id!)
+                    .then((value) {
+                  print('Task Deleted Successfully');
+                  listProvider.getAllTasks(user.currentUser!.id!);
+                  showSnackBar(context, 'Task Deleted Successfully');
+                }).timeout(
                   const Duration(milliseconds: 500),
                   onTimeout: () {
                     print('Task Deleted Successfully');
-                    listProvider.getAllTasks();
+                    listProvider.getAllTasks(user.currentUser!.id!);
                   },
                 );
               },
@@ -122,13 +130,23 @@ class _TaskListItemState extends State<TaskListItem> {
                   ),
                   trailing: InkWell(
                     onTap: () {
-                      FireBaseUtils.updateTaskeIsDone(widget.task).timeout(
+                      FireBaseUtils.updateTaskeIsDone(
+                              widget.task, user.currentUser!.id!)
+                          .then((value) {
+                            setState(() {
+                            widget.task.isDone = !widget.task.isDone!;
+                          });
+                          listProvider.getAllTasks(user.currentUser!.id!);
+                          setState(() {});
+                          debugPrint('${widget.task.isDone}');
+                          })
+                          .timeout(
                         const Duration(milliseconds: 500),
                         onTimeout: () {
                           setState(() {
                             widget.task.isDone = !widget.task.isDone!;
                           });
-                          listProvider.getAllTasks();
+                          listProvider.getAllTasks(user.currentUser!.id!);
                           setState(() {});
                           debugPrint('${widget.task.isDone}');
                         },

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:to_do/home/task_list/widgets/custom_text_field.dart';
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/providers/list_provider.dart';
+import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
 
 class EditTaskView extends StatefulWidget {
@@ -21,7 +22,8 @@ class _EditTaskViewState extends State<EditTaskView> {
   String? title, desc;
   @override
   Widget build(BuildContext context) {
-    ListProvider provider = Provider.of<ListProvider>(context);
+    ListProvider listProvider = Provider.of<ListProvider>(context);
+    var user = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.20,
@@ -116,8 +118,9 @@ class _EditTaskViewState extends State<EditTaskView> {
                     minimumSize: const Size(double.infinity, 40),
                   ),
                   onPressed: () {
-                    provider.updateTask(widget.task, title, desc, choosedDate);
-                    provider.getAllTasks();
+                    listProvider.updateTask(widget.task, title, desc,
+                        choosedDate, user.currentUser!.id!);
+                    listProvider.getAllTasks(user.currentUser!.id!);
                     setState(() {});
                     Navigator.pop(context);
                   },

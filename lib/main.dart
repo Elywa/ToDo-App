@@ -7,8 +7,9 @@ import 'package:to_do/auth/login/login_view.dart';
 import 'package:to_do/auth/register/register_view.dart';
 import 'package:to_do/firebase_options.dart';
 import 'package:to_do/home/home_view.dart';
-import 'package:to_do/home/task_list/edit_task_view.dart';
+
 import 'package:to_do/providers/list_provider.dart';
+import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
 
 void main() async {
@@ -23,8 +24,15 @@ void main() async {
   // await FirebaseFirestore.instance.disableNetwork();
   // FirebaseFirestore.instance.settings =
   //     Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
-  runApp(ChangeNotifierProvider(
-      create: (context) => ListProvider(), child: MyApp()));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ListProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -6,6 +6,7 @@ import 'package:to_do/functions.dart';
 import 'package:to_do/home/task_list/widgets/custom_text_form_field.dart';
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/providers/list_provider.dart';
+import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
@@ -55,12 +56,12 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               ),
               CustomTextFormField(
                 validator: (data) {
-          if (data == null || data.isEmpty) {
-            return 'field is required';
-          } else {
-            return null;
-          }
-        },
+                  if (data == null || data.isEmpty) {
+                    return 'field is required';
+                  } else {
+                    return null;
+                  }
+                },
                 hintText: 'Enter Task title',
                 onChanged: (value) {
                   title = value;
@@ -68,12 +69,12 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               ),
               CustomTextFormField(
                 validator: (data) {
-          if (data == null || data.isEmpty) {
-            return 'field is required';
-          } else {
-            return null;
-          }
-        },
+                  if (data == null || data.isEmpty) {
+                    return 'field is required';
+                  } else {
+                    return null;
+                  }
+                },
                 hintText: 'Enter Task decription',
                 maxLines: 4,
                 onChanged: (value) {
@@ -135,16 +136,22 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   }
 
   void addTask() {
+    var user = Provider.of<UserProvider>(context, listen: false);
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       FireBaseUtils.addTask(
-        Task(title: title, description: description, date: selectedDate),
-      ).timeout(const Duration(milliseconds: 500), onTimeout: () {
+              Task(title: title, description: description, date: selectedDate),
+              user.currentUser!.id!)
+          .then((value) {
+        Navigator.pop(context);
+        showSnackBar(
+            context, '                          Task Added Successfully ');
+      }).timeout(const Duration(milliseconds: 500), onTimeout: () {
         Navigator.pop(context);
         showSnackBar(
             context, '                          Task Added Successfully ');
       });
-      listProvider.getAllTasks();
+      listProvider.getAllTasks(user.currentUser!.id!);
     } else {
       //هنا عشان يفضل يظهر لليوزر مسدج بالايرور
       autovalidateMode = AutovalidateMode.always;

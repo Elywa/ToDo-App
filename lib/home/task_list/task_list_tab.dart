@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:to_do/home/task_list/task_list_item.dart';
 
 import 'package:to_do/providers/list_provider.dart';
+import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
 
 class TaskListTab extends StatefulWidget {
@@ -18,10 +19,10 @@ class _TaskListTabState extends State<TaskListTab> {
   @override
   Widget build(BuildContext context) {
     var listProvider = Provider.of<ListProvider>(context);
+    var user = Provider.of<UserProvider>(context);
 
     if (listProvider.tasks.isEmpty) {
-      listProvider.getAllTasks();
-      
+      listProvider.getAllTasks(user.currentUser!.id!);
     }
 
     return Column(
@@ -30,7 +31,8 @@ class _TaskListTabState extends State<TaskListTab> {
           locale: 'en',
           initialDate: listProvider.selectedDate,
           onDateChange: (selectedDate) {
-            listProvider.cahngeSelectedDate(selectedDate);
+            listProvider.cahngeSelectedDate(
+                selectedDate, user.currentUser!.id!);
             print(listProvider.selectedDate);
           },
           headerProps: const EasyHeaderProps(

@@ -9,8 +9,8 @@ class ListProvider extends ChangeNotifier {
   List<Task> tasks = [];
   bool isDone = false;
   DateTime selectedDate = DateTime.now();
-  void getAllTasks() async {
-    var taskCollectionRef = FireBaseUtils.getCollectionRef();
+  void getAllTasks(String uId) async {
+    var taskCollectionRef = FireBaseUtils.getTaskCollectionRef(uId);
     QuerySnapshot<Task> querySnapshots = await taskCollectionRef.get();
     tasks = querySnapshots.docs.map((docs) {
       return docs.data();
@@ -37,9 +37,9 @@ class ListProvider extends ChangeNotifier {
     //كان ممكن نستغني عن الكلام ده كله بالquerires اللى موجودهخ فى الدوكيومنتيشن فى الفايربيز
   }
 
-  Future<void> updateTask(
-      Task task, String? title, String? description, DateTime? date) {
-    var ref = FireBaseUtils.getCollectionRef();
+  Future<void> updateTask(Task task, String? title, String? description,
+      DateTime? date, String uId) {
+    var ref = FireBaseUtils.getTaskCollectionRef(uId);
     return ref.doc(task.id).update({
       'title': title ?? task.title,
       'description': description ?? task.description,
@@ -47,9 +47,9 @@ class ListProvider extends ChangeNotifier {
     });
   }
 
-  void cahngeSelectedDate(DateTime newDate) {
+  void cahngeSelectedDate(DateTime newDate, String uId) {
     selectedDate = newDate;
     //get tasks again after selecting new date
-    getAllTasks();
+    getAllTasks(uId);
   }
 }

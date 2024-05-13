@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do/auth/register/register_view.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
 import 'package:to_do/functions.dart';
 import 'package:to_do/home/home_view.dart';
 import 'package:to_do/home/task_list/widgets/custom_text_form_field.dart';
+import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
 
 class LoginView extends StatefulWidget {
@@ -198,8 +200,11 @@ class _LoginViewState extends State<LoginView> {
         if (user == null) {
           return;
         }
+
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.updateUser(newUser: user);
         isLoading = false;
-        Navigator.pushNamed(context, HomeView.routeName);
+        Navigator.pushReplacementNamed(context, HomeView.routeName);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'invalid-credential') {
           print(
