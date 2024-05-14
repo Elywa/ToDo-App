@@ -35,19 +35,11 @@ class _TaskListItemState extends State<TaskListItem> {
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16),
                   bottomLeft: Radius.circular(16)),
-              onPressed: (context) {
-                FireBaseUtils.deleteTask(widget.task, user.currentUser!.id!)
-                    .then((value) {
-                  print('Task Deleted Successfully');
-                  listProvider.getAllTasks(user.currentUser!.id!);
-                  showSnackBar(context, 'Task Deleted Successfully');
-                }).timeout(
-                  const Duration(milliseconds: 500),
-                  onTimeout: () {
-                    print('Task Deleted Successfully');
-                    listProvider.getAllTasks(user.currentUser!.id!);
-                  },
-                );
+              onPressed: (context) async {
+                await FireBaseUtils.deleteTask(
+                    widget.task, user.currentUser!.id!);
+                listProvider.getAllTasks(user.currentUser!.id!);
+                debugPrint('Task deleted !');
               },
               backgroundColor: MyTheme.redColor,
               foregroundColor: MyTheme.whiteColor,
@@ -133,14 +125,13 @@ class _TaskListItemState extends State<TaskListItem> {
                       FireBaseUtils.updateTaskeIsDone(
                               widget.task, user.currentUser!.id!)
                           .then((value) {
-                            setState(() {
-                            widget.task.isDone = !widget.task.isDone!;
-                          });
-                          listProvider.getAllTasks(user.currentUser!.id!);
-                          setState(() {});
-                          debugPrint('${widget.task.isDone}');
-                          })
-                          .timeout(
+                        setState(() {
+                          widget.task.isDone = !widget.task.isDone!;
+                        });
+                        listProvider.getAllTasks(user.currentUser!.id!);
+                        setState(() {});
+                        debugPrint('${widget.task.isDone}');
+                      }).timeout(
                         const Duration(milliseconds: 500),
                         onTimeout: () {
                           setState(() {

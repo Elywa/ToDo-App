@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:to_do/consts.dart';
 import 'package:to_do/models/my_user.dart';
 import 'package:to_do/models/task_model.dart';
 
 class FireBaseUtils {
-  static Future<void> addTask(Task task , String uId) {
+  static Future<void> addTask(Task task, String uId) {
     var taskCollectionRef = getTaskCollectionRef(uId);
     DocumentReference<Task> taskDocRef = taskCollectionRef.doc();
     task.id = taskDocRef.id;
@@ -12,7 +13,8 @@ class FireBaseUtils {
   }
 
   static CollectionReference<Task> getTaskCollectionRef(String uId) {
-    return getUserCollectionRef().doc(uId)
+    return getUserCollectionRef()
+        .doc(uId)
         .collection(kTaskCollection)
         .withConverter<Task>(
           fromFirestore: (snapShot, options) => Task.fromJson(snapShot.data()),
@@ -50,5 +52,10 @@ class FireBaseUtils {
   static Future<MyUser?> getUserFromFireStore(String userId) async {
     var querySnapshot = await getUserCollectionRef().doc(userId).get();
     return querySnapshot.data();
+  }
+
+  static Future<void> signOut() async {
+    var signOutUser = await FirebaseAuth.instance.signOut();
+    return signOutUser;
   }
 }

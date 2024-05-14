@@ -60,14 +60,23 @@ class _TaskListTabState extends State<TaskListTab> {
           height: 25,
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: listProvider.tasks.length,
-            itemBuilder: (context, index) {
-              return TaskListItem(
-                task: listProvider.tasks[index],
-              );
-            },
-          ),
+          child: listProvider.tasks.isEmpty
+              ? Center(
+                  child: Text(
+                  'No Tasks yet ',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: MyTheme.primaryColor),
+                ))
+              : ListView.builder(
+                  itemCount: listProvider.tasks.length,
+                  itemBuilder: (context, index) {
+                    return TaskListItem(
+                      task: listProvider.tasks[index],
+                    );
+                  },
+                ),
         ),
       ],
     );

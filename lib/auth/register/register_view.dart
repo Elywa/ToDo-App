@@ -194,7 +194,14 @@ class _RegisterViewState extends State<RegisterView> {
     if (formKey.currentState?.validate() == true) {
       try {
         print('==================== Try Function =====================');
-        isLoading = true;
+        // isLoading = true;
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            });
         final credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
@@ -204,27 +211,36 @@ class _RegisterViewState extends State<RegisterView> {
             email: emailController.text,
             id: credential.user?.uid ?? '',
             name: nameController.text);
+        //store user in provider to use it in all app
         // listen = flase because i want to call provider one time at this moment.
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.updateUser(newUser: user);
-        await FireBaseUtils.addUserToFireStore(user); 
-        isLoading = false;
-        Navigator.pushReplacementNamed(context, HomeView.routeName);
+        // store user in fireStore
+        await FireBaseUtils.addUserToFireStore(user);
+        // isLoading = false;
+        Navigator.of(context).pop();
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return HomeView();
+        }));
         print('==================== Register Success =====================');
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('==================== weak-password =====================');
-          isLoading = false;
+          //isLoading = false;
+          Navigator.of(context).pop();
           showSnackBar(context, 'Weak Password');
         } else if (e.code == 'email-already-in-use') {
-          isLoading = false;
+          //isLoading = false;
           print(
               '==================== The account already exists for that email. =====================');
+          Navigator.of(context).pop();
           showSnackBar(context, 'The account already exists for that email.');
         }
       } catch (e) {
         print('==================== ${e.toString()} =====================');
-        isLoading = false;
+        Navigator.of(context).pop();
+        //isLoading = false;
         showSnackBar(context, e.toString());
       }
     }

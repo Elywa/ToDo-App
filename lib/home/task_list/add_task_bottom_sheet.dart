@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
 import 'package:to_do/functions.dart';
+import 'package:to_do/home/home_view.dart';
 import 'package:to_do/home/task_list/widgets/custom_text_form_field.dart';
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/providers/list_provider.dart';
@@ -135,23 +136,20 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
     );
   }
 
-  void addTask() {
+  void addTask() async {
     var user = Provider.of<UserProvider>(context, listen: false);
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      FireBaseUtils.addTask(
-              Task(title: title, description: description, date: selectedDate),
-              user.currentUser!.id!)
-          .then((value) {
-        Navigator.pop(context);
-        showSnackBar(
-            context, '                          Task Added Successfully ');
-      }).timeout(const Duration(milliseconds: 500), onTimeout: () {
-        Navigator.pop(context);
-        showSnackBar(
-            context, '                          Task Added Successfully ');
-      });
+      await FireBaseUtils.addTask(
+          Task(title: title, description: description, date: selectedDate),
+          user.currentUser!.id!);
+
       listProvider.getAllTasks(user.currentUser!.id!);
+      Navigator.pop(context);
+      showSnackBar(
+        context,
+        'Task added Successfully',
+      );
     } else {
       //هنا عشان يفضل يظهر لليوزر مسدج بالايرور
       autovalidateMode = AutovalidateMode.always;

@@ -18,7 +18,7 @@ class EditTaskView extends StatefulWidget {
 class _EditTaskViewState extends State<EditTaskView> {
   // AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   // GlobalKey<FormState> formKey = GlobalKey();
-  late DateTime? choosedDate;
+   DateTime? choosedDate;
   String? title, desc;
   @override
   Widget build(BuildContext context) {

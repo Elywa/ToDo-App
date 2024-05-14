@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/auth/login/login_view.dart';
+import 'package:to_do/firebase%20utils/firebase_utils.dart';
 import 'package:to_do/home/settings/settings_tab.dart';
 import 'package:to_do/home/task_list/add_task_bottom_sheet.dart';
 import 'package:to_do/home/task_list/task_list_tab.dart';
@@ -24,18 +26,34 @@ class _HomeViewState extends State<HomeView> {
     var listProvider = Provider.of<ListProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         toolbarHeight: MediaQuery.of(context).size.height * 0.20,
         title: Text(
-          'ToDo App(${user.currentUser!.name!})',
+          'ToDo App(${user.currentUser?.name! ?? ''})',
           style: Theme.of(context).textTheme.titleLarge,
         ),
         actions: [
           IconButton(
             onPressed: () {
+              // debugPrint('=============== ${user.currentUser!.name!}');
+              // listProvider.tasks = [];
+              // user.currentUser = null;
+              //Navigator.pushReplacementNamed(context, LoginView.routeName);
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  });
               user.currentUser = null;
               listProvider.tasks = [];
-
-              Navigator.pushReplacementNamed(context, LoginView.routeName);
+              FireBaseUtils.signOut();
+              Navigator.of(context).pop();
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return LoginView();
+              }));
             },
             icon: Icon(
               Icons.logout,
@@ -46,7 +64,7 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
       bottomNavigationBar: SizedBox(
-        height: MediaQuery.of(context).size.height * .108,
+        height: 73,
         child: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           notchMargin: 8,
@@ -58,11 +76,17 @@ class _HomeViewState extends State<HomeView> {
             },
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.list),
+                icon: Icon(
+                  Icons.list,
+                  size: 15,
+                ),
                 label: 'List',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
+                icon: Icon(
+                  Icons.settings,
+                  size: 15,
+                ),
                 label: 'Setting',
               ),
             ],
