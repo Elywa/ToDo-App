@@ -7,6 +7,7 @@ import 'package:to_do/home/settings/settings_tab.dart';
 import 'package:to_do/home/task_list/add_task_bottom_sheet.dart';
 import 'package:to_do/home/task_list/task_list_tab.dart';
 import 'package:to_do/providers/list_provider.dart';
+import 'package:to_do/providers/theme_provider.dart';
 import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
 
@@ -24,12 +25,13 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     var user = Provider.of<UserProvider>(context);
     var listProvider = Provider.of<ListProvider>(context);
+    var themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: MediaQuery.of(context).size.height * 0.20,
         title: Text(
-          'ToDo App(${user.currentUser?.name! ?? ''})',
+          'ToDo App (${user.currentUser?.name! ?? ''})',
           style: Theme.of(context).textTheme.titleLarge,
         ),
         actions: [
@@ -58,7 +60,9 @@ class _HomeViewState extends State<HomeView> {
             icon: Icon(
               Icons.logout,
               size: 30,
-              color: MyTheme.whiteColor,
+              color: themeProvider.isDark()
+                  ? MyTheme.blackColor
+                  : MyTheme.whiteColor,
             ),
           ),
         ],
@@ -66,6 +70,8 @@ class _HomeViewState extends State<HomeView> {
       bottomNavigationBar: SizedBox(
         height: 73,
         child: BottomAppBar(
+          color:
+              themeProvider.isDark() ? MyTheme.blackColor : MyTheme.whiteColor,
           shape: const CircularNotchedRectangle(),
           notchMargin: 8,
           child: BottomNavigationBar(

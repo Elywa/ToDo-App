@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class MyTheme {
@@ -61,7 +59,7 @@ class MyTheme {
       titleMedium: TextStyle(
         color: blackColor,
         fontWeight: FontWeight.w400,
-        fontSize: 18,
+        fontSize: 25,
       ),
     ),
   );
@@ -84,12 +82,12 @@ class MyTheme {
       ),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: primaryColor,
+      backgroundColor: blackColor,
       elevation: 0,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: primaryColor,
-      unselectedItemColor: greyColor,
+      unselectedItemColor: whiteColor,
       elevation: 0,
       backgroundColor: Colors.transparent,
     ),
@@ -98,6 +96,11 @@ class MyTheme {
         color: blackColorDark,
         fontWeight: FontWeight.bold,
         fontSize: 22,
+      ),
+      titleMedium: TextStyle(
+        color: whiteColor,
+        fontWeight: FontWeight.bold,
+        fontSize: 25,
       ),
     ),
   );

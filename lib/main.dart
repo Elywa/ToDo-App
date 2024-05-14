@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -7,6 +6,7 @@ import 'package:to_do/auth/login/login_view.dart';
 import 'package:to_do/auth/register/register_view.dart';
 import 'package:to_do/firebase_options.dart';
 import 'package:to_do/home/home_view.dart';
+import 'package:to_do/providers/theme_provider.dart';
 
 import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/providers/user_provider.dart';
@@ -29,6 +29,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => ListProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider())
       ],
       child: const MyApp(),
     ),
@@ -40,8 +41,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       theme: MyTheme.lightTheme,
+      darkTheme: MyTheme.darkTheme,
+      themeMode: themeProvider.myTheme,
       debugShowCheckedModeBanner: false,
       initialRoute: LoginView.routeName,
       routes: {

@@ -8,6 +8,7 @@ import 'package:to_do/home/task_list/edit_task_view.dart';
 
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/providers/list_provider.dart';
+import 'package:to_do/providers/theme_provider.dart';
 import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
 
@@ -24,6 +25,7 @@ class _TaskListItemState extends State<TaskListItem> {
   Widget build(BuildContext context) {
     var listProvider = Provider.of<ListProvider>(context);
     var user = Provider.of<UserProvider>(context);
+    var themeProvider = Provider.of<ThemeProvider>(context);
     return Container(
       margin: const EdgeInsets.all(10),
       child: Slidable(
@@ -79,7 +81,9 @@ class _TaskListItemState extends State<TaskListItem> {
             //bottom: 24,
           ),
           decoration: BoxDecoration(
-            color: MyTheme.whiteColor,
+            color: themeProvider.isDark()
+                ? MyTheme.blackColor
+                : MyTheme.whiteColor,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
@@ -116,7 +120,8 @@ class _TaskListItemState extends State<TaskListItem> {
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: widget.task.isDone!
                                 ? MyTheme.greenColor
-                                : MyTheme.blackColor,
+                                : MyTheme.greyColor,
+                            
                           ),
                     ),
                   ),
@@ -148,7 +153,7 @@ class _TaskListItemState extends State<TaskListItem> {
                             width: 60,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
-                              color: MyTheme.whiteColor,
+                              color: Colors.transparent,
                             ),
                             child: const Center(
                               child: Text(

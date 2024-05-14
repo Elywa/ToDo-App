@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do/providers/theme_provider.dart';
 import 'package:to_do/theme.dart';
 
 class SettingsTab extends StatefulWidget {
@@ -15,6 +17,7 @@ class _SettingsTabState extends State<SettingsTab> {
   String? selectedMode = 'Light';
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -109,6 +112,12 @@ class _SettingsTabState extends State<SettingsTab> {
                   setState(() {
                     selectedMode = value;
                   });
+
+                  if (selectedMode == 'Light') {
+                    themeProvider.changeTheme(ThemeMode.light);
+                  } else if (selectedMode == 'Dark') {
+                    themeProvider.changeTheme(ThemeMode.dark);
+                  }
                 },
                 value: selectedMode,
               ),
