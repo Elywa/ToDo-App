@@ -59,7 +59,7 @@ class MyTheme {
       titleMedium: TextStyle(
         color: blackColor,
         fontWeight: FontWeight.w400,
-        fontSize: 25,
+        fontSize: 18,
       ),
     ),
   );
@@ -100,7 +100,7 @@ class MyTheme {
       titleMedium: TextStyle(
         color: whiteColor,
         fontWeight: FontWeight.bold,
-        fontSize: 25,
+        fontSize: 22,
       ),
     ),
   );

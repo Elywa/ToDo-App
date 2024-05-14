@@ -7,6 +7,7 @@ import 'package:to_do/home/home_view.dart';
 import 'package:to_do/home/task_list/widgets/custom_text_form_field.dart';
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/providers/list_provider.dart';
+import 'package:to_do/providers/theme_provider.dart';
 import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
 
@@ -27,6 +28,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   @override
   Widget build(BuildContext context) {
     listProvider = Provider.of<ListProvider>(context);
+    var themeProvider = Provider.of<ThemeProvider>(context);
     return Container(
       margin: const EdgeInsets.all(20),
       padding: EdgeInsets.only(
@@ -87,7 +89,9 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 child: Text(
                   'Select Date',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: MyTheme.blackColor,
+                        color: themeProvider.isDark()
+                            ? MyTheme.whiteColor
+                            : MyTheme.blackColor,
                         fontSize: 18,
                       ),
                 ),
@@ -105,7 +109,9 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                           DateFormat('dd-MM-yyyy').format(selectedDate),
                           style:
                               Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    color: MyTheme.blackColor,
+                                    color: themeProvider.isDark()
+                                        ? MyTheme.whiteColor
+                                        : MyTheme.blackColor,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500,
                                   ),
