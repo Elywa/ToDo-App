@@ -24,15 +24,22 @@ class _SettingsTabState extends State<SettingsTab> {
         const SizedBox(
           height: 35,
         ),
+        // ?.copyWith(
+        //         fontSize: 22,
+        //         fontWeight: FontWeight.w500,
+        //         color: MyTheme.primaryColor),
         Padding(
           padding: const EdgeInsets.only(left: 16, bottom: 30),
-          child: Text(
-            'Language',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontSize: 22,
-                fontWeight: FontWeight.w500,
-                color: MyTheme.primaryColor),
-          ),
+          child: Text('Language',
+              style: themeProvider.isDark()
+                  ? Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: MyTheme.whiteColor)
+                  : Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: MyTheme.blackColor)),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -73,15 +80,23 @@ class _SettingsTabState extends State<SettingsTab> {
         const SizedBox(
           height: 50,
         ),
+        //============================================================
+        // ?.copyWith(
+        //         fontSize: 22,
+        //         fontWeight: FontWeight.w500,
+        //         color: MyTheme.primaryColor),
         Padding(
           padding: const EdgeInsets.only(left: 16, bottom: 30),
-          child: Text(
-            'Theme',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontSize: 22,
-                fontWeight: FontWeight.w500,
-                color: MyTheme.primaryColor),
-          ),
+          child: Text('Theme',
+              style: themeProvider.isDark()
+                  ? Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: MyTheme.whiteColor)
+                  : Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: MyTheme.blackColor)),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -103,7 +118,9 @@ class _SettingsTabState extends State<SettingsTab> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
-                                .copyWith(color: MyTheme.primaryColor),
+                                .copyWith(
+                                  color: MyTheme.primaryColor,
+                                ),
                           ),
                           value: item,
                         ))

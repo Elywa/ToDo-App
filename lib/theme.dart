@@ -57,7 +57,7 @@ class MyTheme {
         fontSize: 22,
       ),
       titleMedium: TextStyle(
-        color: blackColor,
+        color: whiteColor,
         fontWeight: FontWeight.w400,
         fontSize: 18,
       ),
@@ -82,7 +82,7 @@ class MyTheme {
       ),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: blackColor,
+      backgroundColor: primaryColor,
       elevation: 0,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -99,8 +99,8 @@ class MyTheme {
       ),
       titleMedium: TextStyle(
         color: whiteColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 22,
+        fontWeight: FontWeight.w400,
+        fontSize: 18,
       ),
     ),
   );
