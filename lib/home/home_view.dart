@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/auth/login/login_view.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
@@ -10,6 +9,7 @@ import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/providers/theme_provider.dart';
 import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeView extends StatefulWidget {
   static const String routeName = 'HomeView';
@@ -80,20 +80,20 @@ class _HomeViewState extends State<HomeView> {
               selectedIndex = index;
               setState(() {});
             },
-            items: const [
+            items: [
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.list,
                   size: 15,
                 ),
-                label: 'List',
+                label: AppLocalizations.of(context)!.list_tab,
               ),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.settings,
                   size: 15,
                 ),
-                label: 'Setting',
+                label: AppLocalizations.of(context)!.setting_tab,
               ),
             ],
           ),

@@ -11,6 +11,7 @@ import 'package:to_do/home/task_list/widgets/custom_text_form_field.dart';
 import 'package:to_do/models/my_user.dart';
 import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterView extends StatefulWidget {
   RegisterView({super.key});
@@ -53,7 +54,7 @@ class _RegisterViewState extends State<RegisterView> {
             backgroundColor: Colors.transparent,
             centerTitle: true,
             title: Text(
-              'Create Account',
+              AppLocalizations.of(context)!.create_account,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
@@ -70,7 +71,7 @@ class _RegisterViewState extends State<RegisterView> {
                       height: MediaQuery.of(context).size.height * .24,
                     ),
                     Text(
-                      'User Name',
+                      AppLocalizations.of(context)!.user_name,
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -78,11 +79,13 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     CustomTextFormField(
                       controller: nameController,
-                      hintText: 'please enter user name',
+                      hintText:
+                          AppLocalizations.of(context)!.user_name_hint_text,
                       keyboradTpe: TextInputType.name,
                       validator: (text) {
                         if (text == null || text.trim().isEmpty) {
-                          return 'field is required';
+                          return AppLocalizations.of(context)!
+                              .field_is_required;
                         } else {
                           return null;
                         }
@@ -92,7 +95,7 @@ class _RegisterViewState extends State<RegisterView> {
                       height: 20,
                     ),
                     Text(
-                      'Email',
+                      AppLocalizations.of(context)!.email,
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -100,17 +103,19 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     CustomTextFormField(
                       controller: emailController,
-                      hintText: 'please enter email',
+                      hintText: AppLocalizations.of(context)!.email_hint_text,
                       keyboradTpe: TextInputType.emailAddress,
                       validator: (text) {
                         if (text == null || text.trim().isEmpty) {
-                          return 'field is required';
+                          return AppLocalizations.of(context)!
+                              .field_is_required;
                         }
                         bool emailValid = RegExp(
                                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                             .hasMatch(emailController.text);
                         if (!emailValid) {
-                          return 'email should be like this "example.email123@example.com"';
+                          return AppLocalizations.of(context)!
+                              .invalid_user_name_or_password_snack_bar;
                         }
                         return null;
                       },
@@ -119,7 +124,7 @@ class _RegisterViewState extends State<RegisterView> {
                       height: 20,
                     ),
                     Text(
-                      'Password',
+                      AppLocalizations.of(context)!.password,
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -127,14 +132,16 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     CustomTextFormField(
                       controller: passwordController,
-                      hintText: 'please enter Password',
+                      hintText:
+                          AppLocalizations.of(context)!.password_hint_text,
                       keyboradTpe: TextInputType.number,
                       validator: (text) {
                         if (text == null || text.trim().isEmpty) {
-                          return 'field is required';
+                          return AppLocalizations.of(context)!
+                              .field_is_required;
                         }
                         if (text.length < 6) {
-                          return 'password must have over 6 numbers';
+                          return AppLocalizations.of(context)!.password_regex;
                         }
                         return null;
                       },
@@ -143,21 +150,24 @@ class _RegisterViewState extends State<RegisterView> {
                       height: 20,
                     ),
                     Text(
-                      'Confirm Password',
+                      AppLocalizations.of(context)!.confirm_password,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: MyTheme.primaryColor,
                           ),
                     ),
                     CustomTextFormField(
                       controller: confirmPassowrdController,
-                      hintText: 'please Confirm Password',
+                      hintText: AppLocalizations.of(context)!
+                          .confirm_password_hint_text,
                       keyboradTpe: TextInputType.number,
                       validator: (text) {
                         if (text == null || text.trim().isEmpty) {
-                          return 'field is required';
+                          return AppLocalizations.of(context)!
+                              .field_is_required;
                         }
                         if (text != passwordController.text) {
-                          return 'password does not match';
+                          return AppLocalizations.of(context)!
+                              .password_does_not_match;
                         }
                         return null;
                       },
@@ -175,7 +185,7 @@ class _RegisterViewState extends State<RegisterView> {
                       },
                       child: Center(
                         child: Text(
-                          'Register',
+                          AppLocalizations.of(context)!.register,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
@@ -229,13 +239,14 @@ class _RegisterViewState extends State<RegisterView> {
           print('==================== weak-password =====================');
           //isLoading = false;
           Navigator.of(context).pop();
-          showSnackBar(context, 'Weak Password');
+          showSnackBar(context, AppLocalizations.of(context)!.weak_password);
         } else if (e.code == 'email-already-in-use') {
           //isLoading = false;
           print(
               '==================== The account already exists for that email. =====================');
           Navigator.of(context).pop();
-          showSnackBar(context, 'The account already exists for that email.');
+          showSnackBar(
+              context, AppLocalizations.of(context)!.email_already_in_use);
         }
       } catch (e) {
         print('==================== ${e.toString()} =====================');

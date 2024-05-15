@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:provider/provider.dart';
 import 'package:to_do/auth/register/register_view.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
@@ -46,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: Text(
-            'Login',
+            AppLocalizations.of(context)!.login,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
@@ -63,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
                     height: MediaQuery.of(context).size.height * .24,
                   ),
                   Text(
-                    'Welcome Back!',
+                    AppLocalizations.of(context)!.welcome_back,
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium!
@@ -73,7 +74,7 @@ class _LoginViewState extends State<LoginView> {
                     height: 20,
                   ),
                   Text(
-                    'Email',
+                    AppLocalizations.of(context)!.email,
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium!
@@ -81,17 +82,17 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   CustomTextFormField(
                     controller: emailController,
-                    hintText: 'please enter email',
+                    hintText: AppLocalizations.of(context)!.email_hint_text,
                     keyboradTpe: TextInputType.emailAddress,
                     validator: (text) {
                       if (text == null || text.trim().isEmpty) {
-                        return 'field is required';
+                        return AppLocalizations.of(context)!.field_is_required;
                       }
                       bool emailValid = RegExp(
                               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                           .hasMatch(emailController.text);
                       if (!emailValid) {
-                        return 'email should be like this "example.email123@example.com"';
+                        return AppLocalizations.of(context)!.email_invalid;
                       }
                       return null;
                     },
@@ -100,7 +101,7 @@ class _LoginViewState extends State<LoginView> {
                     height: 20,
                   ),
                   Text(
-                    'Password',
+                    AppLocalizations.of(context)!.password,
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium!
@@ -109,14 +110,14 @@ class _LoginViewState extends State<LoginView> {
                   CustomTextFormField(
                     obsecureText: true,
                     controller: passwordController,
-                    hintText: 'please enter Password',
+                    hintText: AppLocalizations.of(context)!.password_hint_text,
                     keyboradTpe: TextInputType.number,
                     validator: (text) {
                       if (text == null || text.trim().isEmpty) {
-                        return 'field is required';
+                        return AppLocalizations.of(context)!.field_is_required;
                       }
                       if (text.length < 6) {
-                        return 'password must have over 6 numbers';
+                        return AppLocalizations.of(context)!.password_regex;
                       }
                       return null;
                     },
@@ -128,7 +129,7 @@ class _LoginViewState extends State<LoginView> {
                     onPressed: () {},
                     child: Center(
                       child: Text(
-                        'Forgot Password ? ',
+                        AppLocalizations.of(context)!.forgot_password,
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!
@@ -149,7 +150,7 @@ class _LoginViewState extends State<LoginView> {
                     },
                     child: Center(
                       child: Text(
-                        'Login',
+                        AppLocalizations.of(context)!.login,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -166,7 +167,7 @@ class _LoginViewState extends State<LoginView> {
                     },
                     child: Center(
                       child: Text(
-                        'Create new Account',
+                        AppLocalizations.of(context)!.create_new_account,
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!
@@ -221,8 +222,11 @@ class _LoginViewState extends State<LoginView> {
               '====================== No user found for that email.===============');
           //isLoading = false;
           Navigator.of(context).pop();
-          showSnackBar(context, 'invalid user name or password');
-        } 
+          showSnackBar(
+              context,
+              AppLocalizations.of(context)!
+                  .invalid_user_name_or_password_snack_bar);
+        }
       } catch (e) {
         print('==================== ${e.toString()} =====================');
         //isLoading = false;

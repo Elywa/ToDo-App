@@ -1,0 +1,51 @@
+{
+    "login" : "تسجيل الدخول",
+    "welcome_back" : "أهلا بعودتك!" ,
+    "email" : "البريد الالكتروني" , 
+    "password" : "الرقم السري" , 
+    "email_hint_text" : "من فضلك أدخل الرقم السري" , 
+    "password_hint_text" : "من فضلك ادخل كلمة المرور" , 
+    "forgot_password" : "هل نسيت كلمة السر ؟" , 
+    "create_new_account" : "أنشئ حساب جديد" , 
+    "create_account"  : "إنشاء حساب" , 
+    "user_name" : "اسم المستحدم"  , 
+    "user_name_hint_text" : "من فضلك أدخل اسمك" , 
+    "confirm_password" : "تأكيد كلمة المرور" , 
+    "confirm_password_hint_text" : "من فضلك أعد كتابة كلمة المرور" , 
+    "register" : "تسجيل الدخول" , 
+     
+    "no_tasks" : "لا يوجد مهام بعد !" , 
+    "list_tab" : "القائمه" , 
+    "setting_tab" : "الإعدادات",
+    "add_new_task" : "أضف مهمه جديده" , 
+    "task_title_hint_text" : "أدخل اسم المهمه" , 
+    "task_desc_hint_text" : "أدخل وصف المهمه" , 
+    "select_date" : "إختر يوم" ,
+    "add_button" : "اضافه" , 
+    "field_is_required" : "مطلوب ملئ الخانه" ,
+    "delete" : "حذف" , 
+    "edit" : "تعديل" , 
+    "edit_task" : "تعديل التاسك" ,
+    "save_changes" : "حفظ التعديلات" ,
+    "language" : "اللغه" , 
+    "arabic" : "العربيه" , 
+    "english" : "الانجليزيه" ,
+    "theme" : "المظهر" ,
+    "dark" : "ليلي" , 
+    "light" : "نهارى",
+    "email_invalid" : "يجب ان يكون البريد هكذا 'example.email123@example.com'",
+    "password_regex" : "كلمة المرور يجب ان لا تقل عن 6 ارقام",
+    "invalid_user_name_or_password_snack_bar" : "خطأ فى اسم المستخدم أو كلمه المرور",
+    "password_does_not_match" :"كلمتا المرور ليست متطابقتين",
+    "weak_password" : "كلمة المرور ضعيفه",
+    "email_already_in_use" : "هذا الحساب مستخدم بالفعل",
+    "task_added_successfully_snack_bar" : "تمت اضافة المهمه بنجاح",
+    "done" : "اكتملت" , 
+    "unknown" : "غير معروف"
+ 
+    
+
+
+
+
+}

@@ -6,8 +6,9 @@ import 'package:to_do/auth/login/login_view.dart';
 import 'package:to_do/auth/register/register_view.dart';
 import 'package:to_do/firebase_options.dart';
 import 'package:to_do/home/home_view.dart';
+import 'package:to_do/providers/language_provider.dart';
 import 'package:to_do/providers/theme_provider.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
@@ -29,7 +30,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => ListProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
-        ChangeNotifierProvider(create: (context) => ThemeProvider())
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => LanguageProvider())
       ],
       child: const MyApp(),
     ),
@@ -42,12 +44,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<ThemeProvider>(context);
+    var appLanguage = Provider.of<LanguageProvider>(context);
     return MaterialApp(
       theme: MyTheme.lightTheme,
       darkTheme: MyTheme.darkTheme,
       themeMode: themeProvider.myTheme,
       debugShowCheckedModeBanner: false,
       initialRoute: LoginView.routeName,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale(appLanguage.appLanguage),
       routes: {
         HomeView.routeName: (context) => HomeView(),
         RegisterView.routeName: (context) => RegisterView(),

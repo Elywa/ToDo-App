@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
 import 'package:to_do/functions.dart';
 import 'package:to_do/home/task_list/edit_task_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/providers/list_provider.dart';
@@ -46,7 +47,7 @@ class _TaskListItemState extends State<TaskListItem> {
               backgroundColor: MyTheme.redColor,
               foregroundColor: MyTheme.whiteColor,
               icon: Icons.delete,
-              label: 'Delete',
+              label: AppLocalizations.of(context)!.delete,
             ),
           ],
         ),
@@ -68,7 +69,7 @@ class _TaskListItemState extends State<TaskListItem> {
               backgroundColor: MyTheme.primaryColor,
               foregroundColor: MyTheme.whiteColor,
               icon: Icons.edit,
-              label: 'Edit',
+              label: AppLocalizations.of(context)!.edit,
             ),
           ],
         ),
@@ -116,12 +117,12 @@ class _TaskListItemState extends State<TaskListItem> {
                     child: Text(
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      widget.task.description ?? 'Unknown',
+                      widget.task.description ??
+                          AppLocalizations.of(context)!.unknown,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: widget.task.isDone!
                                 ? MyTheme.greenColor
                                 : MyTheme.greyColor,
-                            
                           ),
                     ),
                   ),
@@ -155,9 +156,9 @@ class _TaskListItemState extends State<TaskListItem> {
                               borderRadius: BorderRadius.circular(16),
                               color: Colors.transparent,
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                'Done!',
+                                AppLocalizations.of(context)!.done,
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 22,

@@ -6,6 +6,7 @@ import 'package:to_do/models/task_model.dart';
 import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditTaskView extends StatefulWidget {
   EditTaskView({super.key, required this.task});
@@ -18,7 +19,7 @@ class EditTaskView extends StatefulWidget {
 class _EditTaskViewState extends State<EditTaskView> {
   // AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   // GlobalKey<FormState> formKey = GlobalKey();
-   DateTime? choosedDate;
+  DateTime? choosedDate;
   String? title, desc;
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class _EditTaskViewState extends State<EditTaskView> {
                 ),
                 Center(
                   child: Text(
-                    'Edit Task',
+                    AppLocalizations.of(context)!.edit_task,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: MyTheme.blackColor,
                           fontSize: 18,
@@ -81,7 +82,7 @@ class _EditTaskViewState extends State<EditTaskView> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    'Select Date',
+                  AppLocalizations.of(context)!.select_date,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: MyTheme.blackColor,
                           fontSize: 18,
@@ -125,7 +126,7 @@ class _EditTaskViewState extends State<EditTaskView> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    'Save Changes',
+                    AppLocalizations.of(context)!.save_changes,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),

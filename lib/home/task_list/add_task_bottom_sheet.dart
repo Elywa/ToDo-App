@@ -3,13 +3,13 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
 import 'package:to_do/functions.dart';
-import 'package:to_do/home/home_view.dart';
 import 'package:to_do/home/task_list/widgets/custom_text_form_field.dart';
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/providers/theme_provider.dart';
 import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
   const AddTaskBottomSheet({super.key});
@@ -49,7 +49,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Add New Task',
+                    AppLocalizations.of(context)!.add_new_task,
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge
@@ -60,12 +60,12 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               CustomTextFormField(
                 validator: (data) {
                   if (data == null || data.isEmpty) {
-                    return 'field is required';
+                    return AppLocalizations.of(context)!.field_is_required;
                   } else {
                     return null;
                   }
                 },
-                hintText: 'Enter Task title',
+                hintText: AppLocalizations.of(context)!.task_title_hint_text,
                 onChanged: (value) {
                   title = value;
                 },
@@ -73,12 +73,12 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               CustomTextFormField(
                 validator: (data) {
                   if (data == null || data.isEmpty) {
-                    return 'field is required';
+                    return AppLocalizations.of(context)!.field_is_required;
                   } else {
                     return null;
                   }
                 },
-                hintText: 'Enter Task decription',
+                hintText: AppLocalizations.of(context)!.task_desc_hint_text,
                 maxLines: 4,
                 onChanged: (value) {
                   description = value;
@@ -87,7 +87,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               Padding(
                 padding: const EdgeInsets.only(top: 6),
                 child: Text(
-                  'Select Date',
+                  AppLocalizations.of(context)!.select_date,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: themeProvider.isDark()
                             ? MyTheme.whiteColor
@@ -130,7 +130,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     addTask();
                   },
                   child: Text(
-                    'Add',
+                    AppLocalizations.of(context)!.add_button,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
@@ -154,7 +154,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       Navigator.pop(context);
       showSnackBar(
         context,
-        'Task added Successfully',
+        AppLocalizations.of(context)!.task_added_successfully_snack_bar,
       );
     } else {
       //هنا عشان يفضل يظهر لليوزر مسدج بالايرور

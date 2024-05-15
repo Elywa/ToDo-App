@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:to_do/home/task_list/task_list_item.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:to_do/providers/language_provider.dart';
 import 'package:to_do/providers/list_provider.dart';
 import 'package:to_do/providers/user_provider.dart';
 import 'package:to_do/theme.dart';
@@ -20,7 +21,7 @@ class _TaskListTabState extends State<TaskListTab> {
   Widget build(BuildContext context) {
     var listProvider = Provider.of<ListProvider>(context);
     var user = Provider.of<UserProvider>(context);
-
+    var appLanguage = Provider.of<LanguageProvider>(context);
     if (listProvider.tasks.isEmpty) {
       listProvider.getAllTasks(user.currentUser!.id!);
     }
@@ -28,7 +29,7 @@ class _TaskListTabState extends State<TaskListTab> {
     return Column(
       children: [
         EasyDateTimeLine(
-          locale: 'en',
+          locale: appLanguage.appLanguage,
           initialDate: listProvider.selectedDate,
           onDateChange: (selectedDate) {
             listProvider.cahngeSelectedDate(
@@ -63,7 +64,7 @@ class _TaskListTabState extends State<TaskListTab> {
           child: listProvider.tasks.isEmpty
               ? Center(
                   child: Text(
-                  'No Tasks yet ',
+                  AppLocalizations.of(context)!.no_tasks,
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
