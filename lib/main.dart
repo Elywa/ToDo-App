@@ -21,6 +21,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  LanguageProvider languageProvider = LanguageProvider();
+  ThemeProvider themeProvider = ThemeProvider();
+  await languageProvider.setItems();
+  await themeProvider.setItems();
   // عشان اكيش الداتا اوفلاين عندى ع الجهاز بحط السطرين دول
   // await FirebaseFirestore.instance.disableNetwork();
   // FirebaseFirestore.instance.settings =
@@ -30,8 +34,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => ListProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
-        ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        ChangeNotifierProvider(create: (context) => LanguageProvider())
+        ChangeNotifierProvider(create: (context) => themeProvider),
+        ChangeNotifierProvider(create: (context) => languageProvider)
       ],
       child: const MyApp(),
     ),
