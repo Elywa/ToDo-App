@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ThemeProvider extends ChangeNotifier {
   ThemeMode myTheme = ThemeMode.light;
   SharedPreferences? sharedPreferences;
+  late String splash;
   void changeTheme(ThemeMode newMode) {
     if (myTheme == newMode) {
       return;
@@ -11,8 +12,10 @@ class ThemeProvider extends ChangeNotifier {
     myTheme = newMode;
 
     if (myTheme == ThemeMode.light) {
+      splash = 'assets/images/splash_12.png';
       saveTheme(false);
     } else {
+      splash = 'assets/images/splash_12_dark.png';
       saveTheme(true);
     }
 
