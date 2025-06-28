@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/firebase%20utils/firebase_utils.dart';
-import 'package:to_do/functions.dart';
+
 import 'package:to_do/home/task_list/edit_task_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
